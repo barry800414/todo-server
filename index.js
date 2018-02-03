@@ -1,6 +1,8 @@
 const cors = require("cors");
 const expressMongoDb = require("express-mongo-db");
 const express = require('express');
+const bodyParser = require('body-parser');
+const ObjectId = require('mongodb').ObjectId;
 
 const PORT = parseInt(process.env.PORT) || 5000;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/todos';
@@ -8,6 +10,7 @@ const app = express();
 
 async function main() {
   app.use(cors());
+  app.use(bodyParser.json());
 
   // setup api routes
   app.use(expressMongoDb(MONGODB_URI));
@@ -20,10 +23,10 @@ async function main() {
 
   app.post('/todos/', async (req, res) => {
     const todos = req.db.collection("todos");
+    const title = req.body.title;
     const result = await todos.insertOne({ title });
     if (result) {
-      console.log(result);
-      res.send(result);
+      res.send(result.ops[0]);
     } else {
       res.send(false);
     }
@@ -31,7 +34,7 @@ async function main() {
 
   app.delete('/todos/:id', async (req, res) => {
     const db = req.db.collection("todos");
-    const _id = req.params.id;
+    const _id = new ObjectId(req.params.id);
     const todo = await db.findOne({ _id });
     if (todo) {
       const result = await db.deleteOne({ _id });
