@@ -1,0 +1,25 @@
+{
+  "name": "todo-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/barry800414/todo-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/barry800414/todo-server/issues"
+  },
+  "homepage": "https://github.com/barry800414/todo-server#readme",
+  "dependencies": {
+    "config": "^1.29.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "express-mongo-db": "^2.0.4"
+  }
+}
